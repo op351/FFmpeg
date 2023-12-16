@@ -2885,6 +2885,7 @@ static int read_thread(void *arg)
 
     /* if seeking requested, we execute it */
     if (start_time != AV_NOPTS_VALUE) {
+        av_log(NULL, AV_LOG_INFO, "if seeking requested, we execute it");
         int64_t timestamp;
 
         timestamp = start_time;
