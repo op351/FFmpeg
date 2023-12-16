@@ -2890,7 +2890,7 @@ static int read_thread(void *arg)
         timestamp = start_time;
         /* add the stream start time */
         if (ic->start_time != AV_NOPTS_VALUE)
-            timestamp += 1;
+            timestamp += ic->start_time;
         ret = avformat_seek_file(ic, -1, INT64_MIN, timestamp, INT64_MAX, 0);
         if (ret < 0) {
             av_log(NULL, AV_LOG_WARNING, "%s: could not seek to position %0.3f\n",
@@ -3425,7 +3425,7 @@ static void event_loop(VideoState *cur_stream)
                             pos = (double)cur_stream->seek_pos / AV_TIME_BASE;
                         pos += incr;
                         if (cur_stream->ic->start_time != AV_NOPTS_VALUE && pos < cur_stream->ic->start_time / (double)AV_TIME_BASE)
-                            pos = 1 / (double)AV_TIME_BASE;
+                            pos = cur_stream->ic->start_time / (double)AV_TIME_BASE;
                         stream_seek(cur_stream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
                     }
                 break;
@@ -3484,7 +3484,7 @@ static void event_loop(VideoState *cur_stream)
                             hh, mm, ss, thh, tmm, tss);
                     ts = frac * cur_stream->ic->duration;
                     if (cur_stream->ic->start_time != AV_NOPTS_VALUE)
-                        ts += 1;
+                        ts += cur_stream->ic->start_time;
                     stream_seek(cur_stream, ts, 0, 0);
                 }
             break;
