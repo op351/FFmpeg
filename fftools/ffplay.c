@@ -1473,7 +1473,7 @@ static void stream_seek(VideoState *is, int64_t pos, int64_t rel, int by_bytes)
     av_log(NULL, AV_LOG_INFO, "seek in the stream");
     if (!is->seek_req) {
         av_log(NULL, AV_LOG_INFO, "seek in the stream2");
-        is->seek_pos = pos;
+        is->seek_pos = pos - ic->start_time;
         av_log(NULL, AV_LOG_INFO, "pos : %d", pos);
         av_log(NULL, AV_LOG_INFO, "ispos : %d", is->seek_pos);
         av_log(NULL, AV_LOG_INFO, "isstt : %d", ic->start_time);
