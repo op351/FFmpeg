@@ -1440,12 +1440,15 @@ static double get_master_clock(VideoState *is)
 
     switch (get_master_sync_type(is)) {
         case AV_SYNC_VIDEO_MASTER:
+            av_log(NULL, AV_LOG_INFO, "AV_SYNC_VIDEO_MASTER");
             val = get_clock(&is->vidclk);
             break;
         case AV_SYNC_AUDIO_MASTER:
+            av_log(NULL, AV_LOG_INFO, "AV_SYNC_AUDIO_MASTER");
             val = get_clock(&is->audclk);
             break;
         default:
+            av_log(NULL, AV_LOG_INFO, "get_master_clock default");
             val = get_clock(&is->extclk);
             break;
     }
