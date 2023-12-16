@@ -3056,6 +3056,7 @@ static int read_thread(void *arg)
             (!is->audio_st || (is->auddec.finished == is->audioq.serial && frame_queue_nb_remaining(&is->sampq) == 0)) &&
             (!is->video_st || (is->viddec.finished == is->videoq.serial && frame_queue_nb_remaining(&is->pictq) == 0))) {
             if (loop != 1 && (!loop || --loop)) {
+                av_log(NULL, AV_LOG_INFO, "seek in the stream enter 1");
                 stream_seek(is, start_time != AV_NOPTS_VALUE ? start_time : 0, 0, 0);
             } else if (autoexit) {
                 ret = AVERROR_EOF;
@@ -3319,6 +3320,7 @@ static void seek_chapter(VideoState *is, int incr)
         return;
 
     av_log(NULL, AV_LOG_VERBOSE, "Seeking to chapter %d.\n", i);
+    av_log(NULL, AV_LOG_INFO, "seek in the stream enter 2");
     stream_seek(is, av_rescale_q(is->ic->chapters[i]->start, is->ic->chapters[i]->time_base,
                                  AV_TIME_BASE_Q), 0, 0);
 }
@@ -3426,6 +3428,7 @@ static void event_loop(VideoState *cur_stream)
                         else
                             incr *= 180000.0;
                         pos += incr;
+                        av_log(NULL, AV_LOG_INFO, "seek in the stream enter 3");
                         stream_seek(cur_stream, pos, incr, 1);
                     } else {
                         pos = get_master_clock(cur_stream);
@@ -3435,6 +3438,7 @@ static void event_loop(VideoState *cur_stream)
                         if (cur_stream->ic->start_time != AV_NOPTS_VALUE && pos < cur_stream->ic->start_time / (double)AV_TIME_BASE)
                             pos = cur_stream->ic->start_time / (double)AV_TIME_BASE;
                         stream_seek(cur_stream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
+                        av_log(NULL, AV_LOG_INFO, "seek in the stream enter 4");
                     }
                 break;
             default:
@@ -3473,6 +3477,7 @@ static void event_loop(VideoState *cur_stream)
             }
                 if (seek_by_bytes || cur_stream->ic->duration <= 0) {
                     uint64_t size =  avio_size(cur_stream->ic->pb);
+                    av_log(NULL, AV_LOG_INFO, "seek in the stream enter 5");
                     stream_seek(cur_stream, size*x/cur_stream->width, 0, 1);
                 } else {
                     int64_t ts;
@@ -3493,6 +3498,7 @@ static void event_loop(VideoState *cur_stream)
                     ts = frac * cur_stream->ic->duration;
                     if (cur_stream->ic->start_time != AV_NOPTS_VALUE)
                         ts += cur_stream->ic->start_time;
+                    av_log(NULL, AV_LOG_INFO, "seek in the stream enter 6");
                     stream_seek(cur_stream, ts, 0, 0);
                 }
             break;
