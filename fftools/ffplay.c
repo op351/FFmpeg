@@ -1475,7 +1475,7 @@ static void stream_seek(VideoState *is, int64_t pos, int64_t rel, int by_bytes)
         is->seek_pos = pos;
         av_log(NULL, AV_LOG_INFO, "pos : %d", pos);
         av_log(NULL, AV_LOG_INFO, "ispos : %d", is->seek_pos);
-        av_log(NULL, AV_LOG_INFO, "isstt : %d", is->start_time);
+        // av_log(NULL, AV_LOG_INFO, "isstt : %d", is->start_time);
         is->seek_rel = rel;
         av_log(NULL, AV_LOG_INFO, "res : %d", rel);
         is->seek_flags &= ~AVSEEK_FLAG_BYTE;
