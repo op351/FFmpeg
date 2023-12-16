@@ -662,6 +662,7 @@ void av_dump_format(AVFormatContext *ic, int index,
             av_log(NULL, AV_LOG_INFO, ", start: ");
             secs = llabs(ic->start_time / AV_TIME_BASE);
             us   = llabs(ic->start_time % AV_TIME_BASE);
+            av_log(NULL, AV_LOG_INFO, "%d  %d",ic->start_time,AV_TIME_BASE);
             av_log(NULL, AV_LOG_INFO, "%s%d.%06d",
                    ic->start_time >= 0 ? "" : "-",
                    secs,
