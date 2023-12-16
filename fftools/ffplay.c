@@ -1718,7 +1718,7 @@ display:
             else if (is->audio_st)
                 av_diff = get_master_clock(is) - get_clock(&is->audclk);
 
-            // av_bprint_init(&buf, 0, AV_BPRINT_SIZE_AUTOMATIC);
+            av_bprint_init(&buf, 0, AV_BPRINT_SIZE_AUTOMATIC);
             // av_bprintf(&buf,
             //           "%7.2f %s:%7.3f fd=%4d aq=%5dKB vq=%5dKB sq=%5dB f=%"PRId64"/%"PRId64"   \r",
             //           get_master_clock(is),
