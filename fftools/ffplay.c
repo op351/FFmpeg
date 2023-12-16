@@ -3425,7 +3425,7 @@ static void event_loop(VideoState *cur_stream)
                             pos = (double)cur_stream->seek_pos / AV_TIME_BASE;
                         pos += incr;
                         if (cur_stream->ic->start_time != AV_NOPTS_VALUE && pos < cur_stream->ic->start_time / (double)AV_TIME_BASE)
-                            pos = cur_stream->1 / (double)AV_TIME_BASE;
+                            pos = 1 / (double)AV_TIME_BASE;
                         stream_seek(cur_stream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
                     }
                 break;
@@ -3484,7 +3484,7 @@ static void event_loop(VideoState *cur_stream)
                             hh, mm, ss, thh, tmm, tss);
                     ts = frac * cur_stream->ic->duration;
                     if (cur_stream->ic->start_time != AV_NOPTS_VALUE)
-                        ts += cur_stream->1;
+                        ts += 1;
                     stream_seek(cur_stream, ts, 0, 0);
                 }
             break;
