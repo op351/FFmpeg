@@ -1539,7 +1539,7 @@ int ifile_open(const OptionsContext *o, const char *filename, Scheduler *sch)
     timestamp = (start_time == AV_NOPTS_VALUE) ? 0 : start_time;
     /* add the stream start time */
     if (!o->seek_timestamp && ic->start_time != AV_NOPTS_VALUE)
-        timestamp += ic->start_time;
+        timestamp += 1;
 
     /* if seeking requested, we execute it */
     if (start_time != AV_NOPTS_VALUE) {
@@ -1569,7 +1569,7 @@ int ifile_open(const OptionsContext *o, const char *filename, Scheduler *sch)
     f->recording_time = recording_time;
     f->input_sync_ref = o->input_sync_ref;
     f->input_ts_offset = o->input_ts_offset;
-    f->ts_offset  = o->input_ts_offset - (copy_ts ? (start_at_zero && ic->start_time != AV_NOPTS_VALUE ? ic->start_time : 0) : timestamp);
+    f->ts_offset  = o->input_ts_offset - (copy_ts ? (start_at_zero && ic->start_time != AV_NOPTS_VALUE ? 1 : 0) : timestamp);
     f->accurate_seek = o->accurate_seek;
     d->loop = o->loop;
     d->nb_streams_warn = ic->nb_streams;

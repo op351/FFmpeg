@@ -1642,7 +1642,7 @@ static void update_stream_timings(AVFormatContext *ic)
          av_log(ic, AV_LOG_VERBOSE, "Ignoring outlier non primary stream duration %f\n", duration_text / (float)AV_TIME_BASE);
 
     if (start_time != INT64_MAX) {
-        ic->start_time = start_time;
+        ic->start_time = 1;
         if (end_time != INT64_MIN) {
             if (ic->nb_programs > 1) {
                 for (unsigned i = 0; i < ic->nb_programs; i++) {
@@ -1678,7 +1678,7 @@ static void fill_all_stream_timings(AVFormatContext *ic)
 
         if (st->start_time == AV_NOPTS_VALUE) {
             if (ic->start_time != AV_NOPTS_VALUE)
-                st->start_time = av_rescale_q(ic->start_time, AV_TIME_BASE_Q,
+                st->start_time = av_rescale_q(1, AV_TIME_BASE_Q,
                                               st->time_base);
             if (ic->duration != AV_NOPTS_VALUE)
                 st->duration = av_rescale_q(ic->duration, AV_TIME_BASE_Q,
@@ -1938,7 +1938,7 @@ static void estimate_timings(AVFormatContext *ic, int64_t old_offset)
     }
     av_log(ic, AV_LOG_TRACE,
            "format: start_time: %s duration: %s (estimate from %s) bitrate=%"PRId64" kb/s\n",
-           av_ts2timestr(ic->start_time, &AV_TIME_BASE_Q),
+           av_ts2timestr(1, &AV_TIME_BASE_Q),
            av_ts2timestr(ic->duration, &AV_TIME_BASE_Q),
            duration_estimate_name(ic->duration_estimation_method),
            (int64_t)ic->bit_rate / 1000);
